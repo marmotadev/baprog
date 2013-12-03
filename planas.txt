@@ -1,0 +1,24 @@
+Reprezentacija konsole:
++ nezinoma situacija
+# musu laivo fragmentas
+x suzeista
+X nuskandinta
+* suvis i tuscia vieta
+
+vidinis formatas matrica su tais paciais simboliais.
+isspausdinti sutartine forma diktavimui visa laivu sarasa.
+komandu apdorojimas (priimti inputa is konsoles): placeships, theymoved, theyshot <koordinate>, last <hit|empty|dead>, shoot, print, undo
+ivedimas - bendras tiek musu (predefined) tiek priesu (per konsole)
+realizuoti saudyma: randomu i laisva vieta; 
+realizuoti saudyma b) sauname pagal diagonales, po to zigzagu laisvose vietose. 
+last - pazymi saudyta vieta ir refreshina
+theyshot - pazymime musu zemelapyje saudyta vieta ir refreshinam
+theymoved - inicijuoja suvi. Pazymimimas flagas moved.
+theymoved pazymeti galimai vel tuscias vietas.
+validuoti inputa - neleisti blogu ejimo kodu. jei sudublikuojamas ivedimas pakartoti inputa.
+suzeidimo atveju - pakeisti strategija. (medzioti aplinkinius). 1) nustatyti krypti jei forma != 1, atrenkam kitus variantus pagal krypti.
+
+
+
+
+
