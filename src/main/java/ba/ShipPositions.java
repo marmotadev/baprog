@@ -44,22 +44,22 @@ public class ShipPositions {
 		{"i8","j8"},
 		{"f10","g10"},
 		{"i10","j10"},
-		{"a8","",""},
-		{"","",""},
-		{"","","",""}
+		{"a8","b8","c8"},
+		{"e8","f8","g8"},
+		{"a10","b10","c10","d10"}
 	};
 
 	public static String[][] ships4={
-		{""},
-		{""},
-		{""},
-		{""},
-		{"",""},
-		{"",""},
-		{"",""},
-		{"","",""},
-		{"","",""},
-		{"","","",""}
+		{"f1"},
+		{"e4"},
+		{"h5"},
+		{"a6"},
+		{"i8","j8"},
+		{"i10","j10"},
+		{"f10","g10"},
+		{"a8","b8","c8"},
+		{"e8","f8","g8"},
+		{"a10","b10","c10","d10"}
 	};
 	public static char[][]map1={
 	//   a b c d e f g h i j
@@ -173,8 +173,9 @@ public class ShipPositions {
 		default: return null;
 		}
 	}
+
 	public static void main(String[] args) {
-		char[][] m = map3;
+		char[][] m = map4;
 		System.out.println("ABCDEFGHIJ");
 		for (int i = 0; i < m.length; i++) {
 			for (int ii = 0; ii < m[i].length; ii++) {
