@@ -15,7 +15,7 @@ public class FieldMapWriter {
 	private static String OURS = "OURS";
 	private static String THEIRS = "THEIRS";
 
-	private static String TOP_SIDE = "+A+B+C+D+E+F+G+H+I+J+";;
+	private static String TOP_SIDE = " A B C D E F G H I J ";
 
 	public static	void
 					print(	char[][] ours,
@@ -29,22 +29,33 @@ public class FieldMapWriter {
 		System.out.print(output);
 	}
 
+	/**
+	 * @param ours
+	 * @param theirs
+	 * @return
+	 */
+	/**
+	 * @param ours
+	 * @param theirs
+	 * @return
+	 */
 	private static	String
 					buildMap(	char[][] ours,
 								char[][] theirs) {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(StringUtils.rightPad(OURS, 30, " "))
-			.append(StringUtils.rightPad(THEIRS, 30, " "))
+		sb.append(StringUtils.rightPad(INDENT + OURS, 30, " "))
+			.append(StringUtils.rightPad(INDENT + THEIRS, 30, " "))
+			.append("\n")
 			.append("\n")
 
 			.append(StringUtils.rightPad(INDENT + TOP_SIDE, 30, " "))
-			.append(StringUtils.rightPad(TOP_SIDE, 30, " "))
+			.append(StringUtils.rightPad(INDENT + TOP_SIDE, 30, " "))
 			.append("\n")
 
 			.append(StringUtils.rightPad(INDENT + SEPARATING_LINE, 30, " "))
-			.append(StringUtils.rightPad(SEPARATING_LINE, 30, " "))
+			.append(StringUtils.rightPad(INDENT + SEPARATING_LINE, 30, " "))
 			.append("\n");
 
 		for (int i = 0; i < TALL; i++) {
@@ -52,8 +63,8 @@ public class FieldMapWriter {
 			StringBuilder sbOurs = new StringBuilder();
 			StringBuilder sbTheirs = new StringBuilder();
 
-			sbTheirs.append(StringUtils.rightPad(Integer.toString(i + 1), 2, " "));
-			sbOurs.append(StringUtils.rightPad(Integer.toString(i + 1), 2, " "));
+			sbTheirs.append(StringUtils.leftPad(Integer.toString(i + 1), 2, " "));
+			sbOurs.append(StringUtils.leftPad(Integer.toString(i + 1), 2, " "));
 
 			for (int j = 0; j < LENGTH; j++) {
 				sbTheirs.append("|")
@@ -74,13 +85,13 @@ public class FieldMapWriter {
 			sb.append(StringUtils.rightPad(sbOurs.toString(), 30, " "))
 				.append(StringUtils.rightPad(sbTheirs.toString(), 30, " "))
 				.append("\n")
-				.append(StringUtils.rightPad(SEPARATING_LINE, 30, " "))
-				.append(StringUtils.rightPad(SEPARATING_LINE, 30, " "))
+				.append(StringUtils.rightPad(INDENT + SEPARATING_LINE, 30, " "))
+				.append(StringUtils.rightPad(INDENT + SEPARATING_LINE, 30, " "))
 				.append("\n");
 		}
 
 		sb.append(StringUtils.rightPad(INDENT + TOP_SIDE, 30, " "))
-			.append(StringUtils.rightPad(TOP_SIDE, 30, " "))
+			.append(StringUtils.rightPad(INDENT + TOP_SIDE, 30, " "))
 			.append("\n");
 		return sb.toString();
 	}
