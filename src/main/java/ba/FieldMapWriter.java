@@ -68,7 +68,7 @@ public class FieldMapWriter {
 
 			for (int j = 0; j < LENGTH; j++) {
 				sbTheirs.append("|")
-						.append(ours[i][j]);
+						.append(theirs[i][j]);
 
 				sbOurs.append("|")
 						.append(ours[i][j]);
@@ -94,12 +94,6 @@ public class FieldMapWriter {
 			.append(StringUtils.rightPad(INDENT + TOP_SIDE, 30, " "))
 			.append("\n");
 		return sb.toString();
-	}
-
-	public static	void
-					main(String[] args) {
-		FieldMap map = new FieldMap();
-		FieldMapWriter.print(map.getField(), map.getField());
 	}
 
 }
