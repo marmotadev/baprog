@@ -61,6 +61,7 @@ public class ShipPositions {
 		{"e8","f8","g8"},
 		{"a10","b10","c10","d10"}
 	};
+
 	public static char[][]map1={
 	//   a b c d e f g h i j
 		{m,m,k,m,m,m,m,m,m,m}, //1
@@ -132,6 +133,42 @@ public class ShipPositions {
 //	};
 //
 
+	public static String getShipString(int shipsNr, int x, int y){
+		String[][] ships = getShips(shipsNr);
+		for (int i = 0; i < ships.length; i++) {
+			for (int j = 0; j < ships[i].length; j++) {
+				if(ships[i][j].equals(x+""+y)){
+					return ships[i][j];
+				}
+			}
+		}
+		return null;
+	}
+
+	public static void markWounded(int shipsNr, int x, int y){
+		String[][] ships = getShips(shipsNr);
+		for (int i = 0; i < ships.length; i++) {
+			for (int j = 0; j < ships[i].length; j++) {
+				if(ships[i][j].equals(x+""+y)){
+					ships[i][j]=x+""+y+"W";
+				}
+			}
+		}
+	}
+
+	public static boolean isShipLive(int shipsNr, int x, int y){
+		String[][] ships = getShips(shipsNr);
+		for (int i = 0; i < ships.length; i++) {
+			for (int j = 0; j < ships[i].length; j++) {
+				if(ships[i][j].equals(x+""+y)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+
 	public static String getMapCode(int i){
 		switch(i){
 		case 1:
@@ -160,7 +197,7 @@ public class ShipPositions {
 		}
 	}
 
-	public static String[][] getShip(int i){
+	public static String[][] getShips(int i){
 		switch(i){
 		case 1:
 			return ships1;
