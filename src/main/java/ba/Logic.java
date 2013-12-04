@@ -12,7 +12,8 @@ public class Logic {
 
 	public void placeShips() {
 		System.out.println("placing ships");
-		combatField.getOurMap().setField(FieldMap.safeCopymap(ShipPositions.map1));
+		char[][] mmm = FieldMap.safeCopymap(ShipPositions.map1);
+		combatField.getOurMap().setField(mmm);
 		combatField.getEnemyMap().clearMap();
 		placed = true;
 		print();
@@ -37,58 +38,52 @@ public class Logic {
 		notImplemented();
 	}
 
-	public void ourLastActionResult(ActionSymbols s) {
-		if (ourTurn)
-			throw new IllegalStateException(
-					"Enemy cannot move - it is our turn!");
-		System.out.println("Our last action resulted:" + s);
+	public void last(HitStatus s) {
 		switch (s) {
-		case DEAD:
-			lastShotResult = HitStatus.SINKED;
-		case SEA:
-			lastShotResult = HitStatus.MISSED;
-		case WOUNDED:
-			lastShotResult = HitStatus.HIT;
+		case FIRST:
 			break;
-		default:
-			throw new IllegalArgumentException("Incoorect last shot result" + s);
 		}
+		lastShotResult = s;
+
 		char newSymbol = symbolForHitStatus(lastShotResult);
 		combatField.getEnemyMap().changeSymbolTo(ourLastShotTarget.getX(),
 				ourLastShotTarget.getY(), newSymbol);
-
-	}
-
-	public void enemyShot(ActionSymbols s) {
+		
 		if (ourTurn)
-			throw new IllegalStateException(
-					"Enemy cannot move - it is our turn!");
-		System.out.println("Our last action resulted:" + s);
-		switch (s) {
-		case DEAD:
-			lastShotResult = HitStatus.SINKED;
-		case SEA:
-			lastShotResult = HitStatus.MISSED;
-		case WOUNDED:
-			lastShotResult = HitStatus.HIT;
-			break;
-		default:
-			throw new IllegalArgumentException("Incoorect last shot result" + s);
-		}
-		char newSymbol = symbolForHitStatus(lastShotResult);
-		combatField.getEnemyMap().changeSymbolTo(ourLastShotTarget.getX(),
-				ourLastShotTarget.getY(), newSymbol);
+			shoot();
 
 	}
+
+//	public void enemyShot(ActionSymbols s) {
+//		if (ourTurn)
+//			throw new IllegalStateException(
+//					"Enemy cannot move - it is our turn!");
+//		System.out.println("Our last action resulted:" + s);
+//		switch (s) {
+//		case DEAD:
+//			lastShotResult = HitStatus.SINKED;
+//		case SEA:
+//			lastShotResult = HitStatus.MISSED;
+//		case WOUNDED:
+//			lastShotResult = HitStatus.HIT;
+//			break;
+//		default:
+//			throw new IllegalArgumentException("Incoorect last shot result" + s);
+//		}
+//		char newSymbol = symbolForHitStatus(lastShotResult);
+//		combatField.getEnemyMap().changeSymbolTo(ourLastShotTarget.getX(),
+//				ourLastShotTarget.getY(), newSymbol);
+//
+//	}
 
 	private char symbolForHitStatus(HitStatus lastShotResult2) {
 		switch (lastShotResult2) {
 		case HIT:
 			return ActionSymbols.WOUNDED.getSymbol();
 		case MISSED:
-			return ActionSymbols.SEA.getSymbol();
-		case SINKED:
 			return ActionSymbols.SHOT.getSymbol();
+		case SINKED:
+			return ActionSymbols.DEAD.getSymbol();
 		default:
 			throw new IllegalArgumentException("Incoorect last shot result"
 					+ lastShotResult2);
@@ -102,7 +97,7 @@ public class Logic {
 	public void shoot() {
 		System.out.println("Now we shoot");
 		if (getOurTurn() == null)
-			ourTurn = false;
+			ourTurn = true;
 		else {
 			if (!ourTurn)
 				throw new IllegalStateException(

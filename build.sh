@@ -1,2 +1,4 @@
 #!/bin/sh
-mvn clean install && java -jar target/javateam-project.jar
+
+
+mvn clean install && ./run.sh
