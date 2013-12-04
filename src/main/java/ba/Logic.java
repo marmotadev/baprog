@@ -45,6 +45,9 @@ public class Logic {
 		default:
 			throw new IllegalArgumentException("Incoorect last shot result" + s);
 		}
+		char[][] fld = combatField.getEnemyMap().getField();
+		combatField.getEnemyMap().getSymbolAt(ourLastShotTarget);
+		
 	}
 
 	public void shoot() {
@@ -56,7 +59,7 @@ public class Logic {
 				throw new IllegalStateException(
 						"Cannot shoot - it is not our turn!");
 		}
-		String target = shootingStrategy.shoot(lastShotResult);
+		String target = shootingStrategy.shoot(combatField, lastShotResult);
 		if (target.equalsIgnoreCase(IShootingStrategy.NONE)) {
 			throw new IllegalStateException("We've got nowhere to shoot - NONE");
 		}

@@ -14,6 +14,6 @@ public interface IShootingStrategy {
 
     String NONE = "NONE";
 
-	public String shoot( HitStatus lastHit);
+	public String shoot( CombatField helper,  HitStatus lastHit);
     
 }
