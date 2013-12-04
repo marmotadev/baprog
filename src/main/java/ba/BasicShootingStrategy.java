@@ -34,7 +34,77 @@ public class BasicShootingStrategy implements IShootingStrategy {
 
     private String myLastShot = "";
     private boolean huntingMode = false;
+    private String myLastHit = "";
 
+    public String hunt(FieldMap map)
+    {
+
+      String column_array = "abcdefghij";
+       // Converting my last hit into the numeric presentation
+       int column = myLastHit.charAt(0) - 'a';
+
+       int row;
+        if (myLastHit.length() == 3)
+            row = 9; // 10 was given so last row
+        else 
+            row = myLastHit.charAt(1) - '1';
+
+        // See if I found already hit fragment
+        // Looking for possible target
+        if ( map.getSymbolAt(column_array.charAt(column - 1), row + 1) == ActionSymbols.SEA.getSymbol())
+            return "" + column_array.charAt(column - 1) + (row + 1); 
+        if ( map.getSymbolAt(column_array.charAt(column + 1), row + 1) == ActionSymbols.SEA.getSymbol())
+            return "" + column_array.charAt(column + 1) + (row + 1); 
+        if ( map.getSymbolAt(column_array.charAt(column ), row ) == ActionSymbols.SEA.getSymbol())
+            return "" + column_array.charAt(column ) + (row ); 
+        if ( map.getSymbolAt(column_array.charAt(column - 1), row + 2) == ActionSymbols.SEA.getSymbol())
+            return "" + column_array.charAt(column - 1) + (row + 2); 
+
+
+        // Can't figure out next part - too hard
+        return null;
+
+        /*
+        // Haven't found free symbol nearby, so that means big ship and need to look from hit parts
+
+        if ( map.getSymbolAt(column_array.charAt(column - 1), row + 1) == ActionSymbols.WOUNDED.getSymbol())
+        {
+            // Found wounded part in west so need to move to east
+            char symbol;
+            int inc = 1;
+            do {
+                symbol = map.getSymbolAt(column_array.charAt(column + inc), row + 1);
+                if (symbol == ActionSymbols.WOUNDED.getSymbol()) inc++;
+            }
+            while (symbol != ActionSymbols.BORDER.getSymbol());
+            
+            return "" + column_array.charAt(column + inc) + (row + 1); 
+        }
+
+        
+        if ( map.getSymbolAt(column_array.charAt(column + 1), row + 1) == ActionSymbols.WOUNDED.getSymbol())
+            {
+            // Found wounded part in west so need to move to east
+            char symbol;
+            int inc = 1;
+            do {
+                symbol = map.getSymbolAt(column_array.charAt(column - inc), row + 1);
+                if (symbol == ActionSymbols.WOUNDED.getSymbol()) inc++;
+            }
+            while (symbol != ActionSymbols.BORDER.getSymbol());
+            
+            return "" + column_array.charAt(column - inc) + (row + 1); 
+        }
+
+        if ( map.getSymbolAt(column_array.charAt(column ), row ) == ActionSymbols.WOUNDED.getSymbol())
+            return "" + column_array.charAt(column ) + (row ); 
+        if ( map.getSymbolAt(column_array.charAt(column - 1), row + 2) == ActionSymbols.SEA.getSymbol())
+            return "" + column_array.charAt(column - 1) + (row + 2); 
+        
+
+        return "none";
+        */
+    }
     
     @Override
     public String shoot( CombatField helper, HitStatus lastHit )
@@ -44,6 +114,22 @@ public class BasicShootingStrategy implements IShootingStrategy {
             huntingMode = false;
             myLastShot = "";
             current = 0;
+        }
+
+        if (lastHit ==  HitStatus.HIT)
+        {
+            // Entering hunting mode
+            huntingMode = true;
+
+            // Remembering where I hit last
+            myLastHit = myLastShot;
+        }
+
+        if (huntingMode) {
+            // Hunting for a ship
+            myLastShot = hunt(helper.getEnemyMap());
+
+            if (myLastShot != null ) return myLastShot;
         }
 
         // At first checking my predefined shot
