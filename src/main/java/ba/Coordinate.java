@@ -1,41 +1,52 @@
 package ba;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Coordinate {
-	private String x;
-	private String y;
-	
+	private char x;
+	private int y;
+	private static final Map<String, Integer> coordinateMapping = new HashMap<>();
+	static {
+		coordinateMapping.put("a", 0);
+		coordinateMapping.put("b", 1);
+		coordinateMapping.put("c", 2);
+		coordinateMapping.put("d", 3);
+		coordinateMapping.put("e", 4);
+		coordinateMapping.put("f", 5);
+		coordinateMapping.put("g", 6);
+		coordinateMapping.put("h", 7);
+		coordinateMapping.put("i", 8);
+		coordinateMapping.put("j", 9);
+	}
+
 	public Coordinate(String x, String y) {
 		super();
-		this.x = x;
-		this.y = y;
+		this.x = x.charAt(0);
+		this.y = Integer.parseInt(y);
 	}
-	public String getX() {
+
+	public char getX() {
 		return x;
 	}
-	public void setX(String x) {
+
+	public void setX(char x) {
 		this.x = x;
 	}
-	public String getY() {
+
+	public int getY() {
 		return y;
 	}
-	public void setY(String y) {
+
+	public void setY(int y) {
 		this.y = y;
 	}
+
 	@Override
 	public String toString() {
 		return "Coordinate [x=" + x + ", y=" + y + "]";
 	}
-	public int getMapX() {
-//		Map<String> m = new HashMap<>();
-//		m.
-		return 0;
-		
-	}
-	public int getMapY() {
-		return Integer.parseInt(y);
-	}
+
 	
 
 }

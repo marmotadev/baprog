@@ -3,11 +3,19 @@ package ba;
 public class Logic {
 
 	IShootingStrategy shootingStrategy = new BasicShootingStrategy();
-	private HitStatus lastShotResult;
+	private CombatField combatField = new CombatField();
+	private Boolean ourTurn;
+	private HitStatus lastShotResult = HitStatus.FIRST;
+	private Coordinate ourLastShotTarget;
+
 	public void placeShips() {
 		System.out.println("placing ships");
 		notImplemented();
 
+	}
+
+	public Boolean getOurTurn() {
+		return ourTurn;
 	}
 
 	public static void notImplemented() {
@@ -28,22 +36,39 @@ public class Logic {
 		System.out.println("Our last action resulted:" + s);
 		switch (s) {
 		case DEAD:
-			break;
+			lastShotResult = HitStatus.SINKED;
 		case SEA:
-			break;
+			lastShotResult = HitStatus.MISSED;
 		case WOUNDED:
+			lastShotResult = HitStatus.HIT;
 			break;
+		default:
+			throw new IllegalArgumentException("Incoorect last shot result" + s);
 		}
-		notImplemented();
-
 	}
 
 	public void shoot() {
 		System.out.println("Now we shoot");
+		if (getOurTurn() == null)
+			ourTurn = false;
+		else {
+			if (!ourTurn)
+				throw new IllegalStateException(
+						"Cannot shoot - it is not our turn!");
+		}
 		String target = shootingStrategy.shoot(lastShotResult);
-		//TODO:
-		// init lastShotResult
-		notImplemented();
+		if (target.equalsIgnoreCase(IShootingStrategy.NONE)) {
+			throw new IllegalStateException("We've got nowhere to shoot - NONE");
+		}
+		ourLastShotTarget = parseTargetFromStrategy(target);
+		System.out.println("We've shot at " + ourLastShotTarget);
+	}
+
+	private Coordinate parseTargetFromStrategy(String target) {
+		String x = target.substring(0, 1);
+		String y = target.substring(1);
+		Coordinate targetCoord = new Coordinate(x, y);
+		return targetCoord;
 	}
 
 	public void print() {

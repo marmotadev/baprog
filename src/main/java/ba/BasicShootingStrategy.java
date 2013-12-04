@@ -6,12 +6,17 @@
 
 package ba;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author tlapinskas
  */
 public class BasicShootingStrategy implements IShootingStrategy {
 
+	public static Map<String, Integer> m = new HashMap<>();
+	
     private String [] shots = 
     { "a1", "c1", "e1", "g1", "i1", "j1",
       "a10", "c10", "e10", "g10", "i10", "j10",
