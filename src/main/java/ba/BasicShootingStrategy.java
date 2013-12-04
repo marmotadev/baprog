@@ -6,12 +6,17 @@
 
 package ba;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author tlapinskas
  */
 public class BasicShootingStrategy implements IShootingStrategy {
 
+	public static Map<String, Integer> m = new HashMap<>();
+	
     private String [] shots = 
     { "a1", "c1", "e1", "g1", "i1", "j1",
       "a10", "c10", "e10", "g10", "i10", "j10",
@@ -25,9 +30,6 @@ public class BasicShootingStrategy implements IShootingStrategy {
       "a6", "b6", "d6", "f6", "h6", "i6", "j6",
     };
 
-    // Temporary map;
-    private Map helper = new Map();
-
     private int current = 0;
 
     private String myLastShot = "";
@@ -35,7 +37,7 @@ public class BasicShootingStrategy implements IShootingStrategy {
 
     
     @Override
-    public String shoot( HitStatus lastHit )
+    public String shoot( CombatField helper, HitStatus lastHit )
     {
         // My first hit, so setting all values to default
         if ( lastHit == HitStatus.FIRST ) {
@@ -47,16 +49,24 @@ public class BasicShootingStrategy implements IShootingStrategy {
         // At first checking my predefined shot
         while ( current < shots.length)
         {
-            if ( helper.getSymbolAt(shots[current]) == '+' )
+            if ( helper.getEnemyMap().getSymbolAt(shots[current]) == ActionSymbols.SEA.getSymbol() )
             {
                 myLastShot = shots[current++] ;
                 return myLastShot;
             }
+            else
+                current++;
         }
 
         // I have no more predefined shots, thus now firing at the empty spaces
-        if ( helper.containsFree()) {
-            myLastShot = helper.findFirstFree(ActionSymbols.SEA);
+        if ( helper.getEnemyMap().containsFree()) {
+            myLastShot = helper.getEnemyMap().findFirstFree();
+            return myLastShot;
+        }
+
+        if ( helper.getEnemyMap().containsMoved()) {
+            myLastShot = helper.getEnemyMap().findFirstMoved();
+            return myLastShot; 
         }
 
         return "NONE";
