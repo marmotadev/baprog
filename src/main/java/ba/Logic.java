@@ -11,21 +11,18 @@ public class Logic {
 	private int mapNo;
 
 	public void placeShips() {
-		mapNo = new Double(Math.random() * 4).intValue();
+		mapNo = new Double(Math.random() * 4).intValue() + 1;
 		System.out.println("placing ships by map " + mapNo);
 		char[][] mmm = FieldMap.safeCopymap(ShipPositions.getMap(mapNo));
 		combatField.getOurMap().setField(mmm);
 		combatField.getEnemyMap().clearMap();
 		placed = true;
 		print();
+		setOurTurn(null);
 		System.out.println(ShipPositions.getMapCode(mapNo));
 
 	}
 
-	private char[][] pickRandomMap() {
-		
-		return ShipPositions.map1;
-	}
 
 	public Boolean getOurTurn() {
 		return ourTurn;
@@ -67,6 +64,7 @@ public class Logic {
 			default:
 				throw new IllegalStateException("Can't handle: Their status is " + theirShotResult);
 		}
+		System.out.println(msg);
 		if (getOurTurn())
 			shoot();
 	}
@@ -147,8 +145,10 @@ public class Logic {
 
 	public void shoot() {
 		System.out.println("Now we shoot");
-		if (getOurTurn() == null)
+		if (getOurTurn() == null) {
+			System.out.println("We are starting a game");
 			setOurTurn(true);
+		}
 		else {
 			if (!getOurTurn())
 				throw new IllegalStateException(

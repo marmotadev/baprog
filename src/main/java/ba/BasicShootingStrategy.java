@@ -105,6 +105,14 @@ public class BasicShootingStrategy implements IShootingStrategy {
         return "none";
         */
     }
+    
+    public char getColumn(int Column) {
+    	String column_array = "abcdefghij";
+    	if (Column < 0 ||  Column >= 10)
+    		return 'k';
+    	
+    	else return column_array.charAt(Column);
+    }
 
     void markShot( FieldMap map) {
         // Converting myLastShot as pair number
@@ -115,37 +123,37 @@ public class BasicShootingStrategy implements IShootingStrategy {
        map.changeSymbolTo(myLastShot, ActionSymbols.DEAD.getSymbol());
 
        int row;
-        if (myLastHit.length() == 3)
+        if (myLastShot.length() == 3)
             row = 9; // 10 was given so last row
         else 
-            row = myLastHit.charAt(1) - '1';
+            row = myLastShot.charAt(1) - '1';
 
         // Adjusting row to contain a human readable coord
         row++;
 
-        if ( map.getSymbolAt(column_array.charAt(column - 1 ), row) == ActionSymbols.SEA.getSymbol() )
-           map.changeSymbolTo(column_array.charAt(column - 1 ), row, ActionSymbols.SHOT.getSymbol());
+        if ( map.getSymbolAt(getColumn(column - 1 ), row) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(getColumn(column - 1 ), row, ActionSymbols.SHOT.getSymbol());
 
-        if ( map.getSymbolAt(column_array.charAt(column + 1 ), row) == ActionSymbols.SEA.getSymbol() )
-           map.changeSymbolTo(column_array.charAt(column + 1 ), row, ActionSymbols.SHOT.getSymbol());
+        if ( map.getSymbolAt(getColumn(column + 1 ), row) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(getColumn(column + 1 ), row, ActionSymbols.SHOT.getSymbol());
 
-        if ( map.getSymbolAt(column_array.charAt(column ), row - 1) == ActionSymbols.SEA.getSymbol() )
-           map.changeSymbolTo(column_array.charAt(column ), row - 1, ActionSymbols.SHOT.getSymbol());
+        if ( map.getSymbolAt(getColumn(column ), row - 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(getColumn(column ), row - 1, ActionSymbols.SHOT.getSymbol());
 
-        if ( map.getSymbolAt(column_array.charAt(column ), row + 1) == ActionSymbols.SEA.getSymbol() )
-           map.changeSymbolTo(column_array.charAt(column ), row + 1, ActionSymbols.SHOT.getSymbol());
+        if ( map.getSymbolAt(getColumn(column ), row + 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(getColumn(column ), row + 1, ActionSymbols.SHOT.getSymbol());
         
-        if ( map.getSymbolAt(column_array.charAt(column - 1 ), row - 1) == ActionSymbols.SEA.getSymbol() )
-           map.changeSymbolTo(column_array.charAt(column - 1 ), row - 1, ActionSymbols.SHOT.getSymbol());
+        if ( map.getSymbolAt(getColumn(column - 1 ), row - 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(getColumn(column - 1 ), row - 1, ActionSymbols.SHOT.getSymbol());
 
-        if ( map.getSymbolAt(column_array.charAt(column - 1 ), row + 1) == ActionSymbols.SEA.getSymbol() )
-           map.changeSymbolTo(column_array.charAt(column - 1 ), row + 1, ActionSymbols.SHOT.getSymbol());
+        if ( map.getSymbolAt(getColumn(column - 1 ), row + 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(getColumn(column - 1 ), row + 1, ActionSymbols.SHOT.getSymbol());
 
-        if ( map.getSymbolAt(column_array.charAt(column + 1 ), row - 1) == ActionSymbols.SEA.getSymbol() )
-           map.changeSymbolTo(column_array.charAt(column + 1 ), row - 1, ActionSymbols.SHOT.getSymbol());
+        if ( map.getSymbolAt(getColumn(column + 1 ), row - 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(getColumn(column + 1 ), row - 1, ActionSymbols.SHOT.getSymbol());
 
-        if ( map.getSymbolAt(column_array.charAt(column + 1 ), row + 1 ) == ActionSymbols.SEA.getSymbol() )
-           map.changeSymbolTo(column_array.charAt(column + 1 ), row + 1, ActionSymbols.SHOT.getSymbol());
+        if ( map.getSymbolAt(getColumn(column + 1 ), row + 1 ) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(getColumn(column + 1 ), row + 1, ActionSymbols.SHOT.getSymbol());
 
     }
     
