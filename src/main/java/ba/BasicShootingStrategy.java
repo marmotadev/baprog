@@ -118,18 +118,21 @@ public class BasicShootingStrategy implements IShootingStrategy {
         else 
             row = myLastHit.charAt(1) - '1';
 
+        // Adjusting row to contain a human readable coord
+        row++;
+
         if ( map.getSymbolAt(column_array.charAt(column - 1 ), row) == ActionSymbols.SEA.getSymbol() )
            map.changeSymbolTo(column_array.charAt(column - 1 ), row, ActionSymbols.SHOT.getSymbol());
 
         if ( map.getSymbolAt(column_array.charAt(column + 1 ), row) == ActionSymbols.SEA.getSymbol() )
            map.changeSymbolTo(column_array.charAt(column + 1 ), row, ActionSymbols.SHOT.getSymbol());
 
-        if ( map.getSymbolAt(column_array.charAt(column - 1 ), row - 1) == ActionSymbols.SEA.getSymbol() )
-           map.changeSymbolTo(column_array.charAt(column - 1 ), row - 1, ActionSymbols.SHOT.getSymbol());
+        if ( map.getSymbolAt(column_array.charAt(column ), row - 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(column_array.charAt(column ), row - 1, ActionSymbols.SHOT.getSymbol());
 
-        if ( map.getSymbolAt(column_array.charAt(column - 1 ), row + 1) == ActionSymbols.SEA.getSymbol() )
-           map.changeSymbolTo(column_array.charAt(column - 1 ), row + 1, ActionSymbols.SHOT.getSymbol());
-
+        if ( map.getSymbolAt(column_array.charAt(column ), row + 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(column_array.charAt(column ), row + 1, ActionSymbols.SHOT.getSymbol());
+        
         if ( map.getSymbolAt(column_array.charAt(column - 1 ), row - 1) == ActionSymbols.SEA.getSymbol() )
            map.changeSymbolTo(column_array.charAt(column - 1 ), row - 1, ActionSymbols.SHOT.getSymbol());
 
