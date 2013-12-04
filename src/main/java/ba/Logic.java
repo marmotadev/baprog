@@ -7,11 +7,19 @@ public class Logic {
 	private Boolean ourTurn;
 	private HitStatus lastShotResult = HitStatus.FIRST;
 	private Coordinate ourLastShotTarget;
+	private boolean placed = false;
 
 	public void placeShips() {
 		System.out.println("placing ships");
-		notImplemented();
+		combatField.getOurMap().setField(pickRandomField());
+		placed = true;
+		print();
 
+	}
+
+	private char[][] pickRandomField() {
+		// TODO Auto-generated method stub
+		return ShipPositions.map1;
 	}
 
 	public Boolean getOurTurn() {
@@ -45,9 +53,23 @@ public class Logic {
 		default:
 			throw new IllegalArgumentException("Incoorect last shot result" + s);
 		}
-		char[][] fld = combatField.getEnemyMap().getField();
-		combatField.getEnemyMap().getSymbolAt(ourLastShotTarget);
-		
+		char newSymbol = symbolForHitStatus(lastShotResult);
+		combatField.getEnemyMap().changeSymbolTo(ourLastShotTarget.getX(),
+				ourLastShotTarget.getY(), newSymbol);
+
+	}
+
+	private char symbolForHitStatus(HitStatus lastShotResult2) {
+		switch (lastShotResult2) {
+		case HIT:
+			return ActionSymbols.WOUNDED.getSymbol();
+		case MISSED:
+			return ActionSymbols.SEA.getSymbol();
+		case SINKED:
+			return ActionSymbols.SHOT.getSymbol();
+		default:
+			throw new IllegalArgumentException("Incoorect last shot result" + lastShotResult2);
+		}
 	}
 
 	public void shoot() {
