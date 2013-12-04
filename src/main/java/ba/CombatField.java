@@ -19,6 +19,9 @@ public class CombatField {
 		this.enemyMap = enemyMap;
 	}
 	
-	
+   public void placeOurShips()	
+   {
+       this.ourMap.setField(ShipPositions.map1);
+   }
 
 }

@@ -51,13 +51,13 @@ public class BasicShootingStrategy implements IShootingStrategy {
 
         // See if I found already hit fragment
         // Looking for possible target
-        if ( map.getSymbolAt(column_array.charAt(column - 1), row + 1) == ActionSymbols.SEA.getSymbol())
+        if ( map.getSymbolAt(getColumn(column - 1), row + 1) == ActionSymbols.SEA.getSymbol())
             return "" + column_array.charAt(column - 1) + (row + 1); 
-        if ( map.getSymbolAt(column_array.charAt(column + 1), row + 1) == ActionSymbols.SEA.getSymbol())
+        if ( map.getSymbolAt(getColumn(column + 1), row + 1) == ActionSymbols.SEA.getSymbol())
             return "" + column_array.charAt(column + 1) + (row + 1); 
-        if ( map.getSymbolAt(column_array.charAt(column ), row ) == ActionSymbols.SEA.getSymbol())
+        if ( map.getSymbolAt(getColumn(column ), row ) == ActionSymbols.SEA.getSymbol())
             return "" + column_array.charAt(column ) + (row ); 
-        if ( map.getSymbolAt(column_array.charAt(column - 1), row + 2) == ActionSymbols.SEA.getSymbol())
+        if ( map.getSymbolAt(getColumn(column - 1), row + 2) == ActionSymbols.SEA.getSymbol())
             return "" + column_array.charAt(column - 1) + (row + 2); 
 
 
@@ -114,19 +114,19 @@ public class BasicShootingStrategy implements IShootingStrategy {
     	else return column_array.charAt(Column);
     }
 
-    void markShot( FieldMap map) {
+    void markShot( FieldMap map, String pos) {
         // Converting myLastShot as pair number
 
-        String column_array = "abcdefghij";
-       int column = myLastShot.charAt(0) - 'a';
+        System.out.println("Marking as dead neighbours for " + pos);
+       int column = pos.charAt(0) - 'a';
        
-       map.changeSymbolTo(myLastShot, ActionSymbols.DEAD.getSymbol());
+       map.changeSymbolTo(pos, ActionSymbols.DEAD.getSymbol());
 
        int row;
-        if (myLastShot.length() == 3)
+        if (pos.length() == 3)
             row = 9; // 10 was given so last row
         else 
-            row = myLastShot.charAt(1) - '1';
+            row = pos.charAt(1) - '1';
 
         // Adjusting row to contain a human readable coord
         row++;
@@ -155,6 +155,30 @@ public class BasicShootingStrategy implements IShootingStrategy {
         if ( map.getSymbolAt(getColumn(column + 1 ), row + 1 ) == ActionSymbols.SEA.getSymbol() )
            map.changeSymbolTo(getColumn(column + 1 ), row + 1, ActionSymbols.SHOT.getSymbol());
 
+
+        // Checking neighbours
+        if ( map.getSymbolAt(getColumn(column - 1 ), row) == ActionSymbols.WOUNDED.getSymbol() )
+        {
+           map.changeSymbolTo(getColumn(column - 1 ), row, ActionSymbols.DEAD.getSymbol()); 
+           markShot(map, "" + getColumn(column - 1 ) + (row  ));
+        }
+
+        if ( map.getSymbolAt(getColumn(column + 1 ), row) == ActionSymbols.WOUNDED.getSymbol() )
+        {
+           map.changeSymbolTo(getColumn(column + 1 ), row, ActionSymbols.DEAD.getSymbol()); 
+           markShot(map, "" + getColumn(column + 1 ) + (row + 1 ));
+        }
+        if ( map.getSymbolAt(getColumn(column ), row - 1) == ActionSymbols.WOUNDED.getSymbol() )
+           {
+           map.changeSymbolTo(getColumn(column ), row - 1, ActionSymbols.DEAD.getSymbol()); 
+           markShot(map, "" + getColumn(column ) + (row ));
+        }
+
+        if ( map.getSymbolAt(getColumn(column ), row + 1) == ActionSymbols.WOUNDED.getSymbol() )
+        {
+           map.changeSymbolTo(getColumn(column ), row + 1, ActionSymbols.DEAD.getSymbol()); 
+           markShot(map, "" + getColumn(column ) + (row + 2 ));
+        }
     }
     
     @Override
@@ -167,8 +191,10 @@ public class BasicShootingStrategy implements IShootingStrategy {
             current = 0;
         }
 
+        System.out.println("Hunting mode is "  +  huntingMode);
         if ( lastHit == HitStatus.MISSED ) {
            helper.getEnemyMap().changeSymbolTo(myLastShot, ActionSymbols.SHOT.getSymbol()); 
+           System.out.println("I missed");
         }
 
         if (lastHit ==  HitStatus.HIT)
@@ -190,12 +216,14 @@ public class BasicShootingStrategy implements IShootingStrategy {
             // Markingthis place as hitted
             helper.getEnemyMap().changeSymbolTo(myLastShot, ActionSymbols.WOUNDED.getSymbol());
 
-            markShot(helper.getEnemyMap());
+            markShot(helper.getEnemyMap(), myLastShot);
         }
 
-        if (false && huntingMode) {
+        if ( huntingMode) {
             // Hunting for a ship
             myLastShot = hunt(helper.getEnemyMap());
+
+            System.out.println("Hunting mode is " + huntingMode);
 
             // I was unable to find next target, I give up on this strategy for now
             if (myLastShot != null ) 
