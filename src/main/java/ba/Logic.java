@@ -39,6 +39,10 @@ public class Logic {
 	}
 
 	public void last(HitStatus s) {
+		switch (s) {
+		case FIRST:
+			break;
+		}
 		lastShotResult = s;
 
 		char newSymbol = symbolForHitStatus(lastShotResult);
