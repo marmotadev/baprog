@@ -154,6 +154,10 @@ public class BasicShootingStrategy implements IShootingStrategy {
             current = 0;
         }
 
+        if ( lastHit == HitStatus.MISSED ) {
+           helper.getEnemyMap().changeSymbolTo(myLastShot, ActionSymbols.SHOT.getSymbol()); 
+        }
+
         if (lastHit ==  HitStatus.HIT)
         {
             // Entering hunting mode
