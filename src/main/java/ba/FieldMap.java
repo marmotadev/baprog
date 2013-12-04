@@ -72,6 +72,19 @@ public class FieldMap {
        return false;
     }
 
+
+    public boolean containsMoved( )
+    {
+       for (int i=0; i<10; i++)
+        {
+            for (int j=0; j<10; j++)
+                if ( field[i][j] == ActionSymbols.MOVED.getSymbol() )
+                    return true;
+        } 
+
+       return false;
+    }
+
     /**
     Returns if passed coordinate are within the grid
     @param column - column which is char a - j
@@ -106,16 +119,16 @@ public class FieldMap {
     @param row row of the grid
     @return Character from grid, '|' otherwise
     */
-    public char getSymbolAt( char column, int row )
+    public char getSymbolAt( char row, int column )
     {
         // First symbol is column and encoded by char
-        if (!isValid(column, row)) return '|';
+        if (!isValid(row, column)) return '|';
 
         // Calculate column based on letter
-        int column_numb = column - 'a';
+        int row_number = row - 'a';
 
         // Calcuate row based on number
-        int row_number = row - 1;
+        int column_numb = column - 1;
 
         return field[row_number][column_numb];
     }
@@ -165,13 +178,31 @@ public class FieldMap {
 
     }
 
+    public void changeSymbolTo( String coords, char newSymbol ) {
+
+       // First symbol is column and encoded by char
+        if (!isValid(coords)) return ;
+
+        // Calculate column based on letter
+        int column = coords.charAt(0) - 'a';
+
+        // Calcuate row based on number
+        int row;
+        if (coords.length() == 3)
+            row = 9; // 10 was given so last row
+        else 
+            row = coords.charAt(1) - '1';
+
+        field[row] [column] = newSymbol;
+
+    }
 
     /**
     Finds the first occurance of free symbol passed as param
     @param symbol which symbol to check
     @return 
     */
-    public String findFirstFree( ActionSymbols symbol)
+    public String findFirstFree( )
     {
 
         String row_array = "abcdefghij";
@@ -179,18 +210,58 @@ public class FieldMap {
         {
             for (int column = 0; column < 10; column++)
             {
-                if ( field[row][column] ==  symbol.getSymbol())
+                if ( (char)(field[row][column]) == ActionSymbols.SEA.getSymbol())
                 {
                     // Find needed symbol, need to convert to String and return
-                    char row_symb = row_array.charAt(row);
-                    String coords = "" + row_symb + (column + 1);
+                    char col_symb = row_array.charAt(column);
+                    String coords = "" + col_symb + (row + 1);
+
+                    return coords;
                     
                 }
 
             }
         }
 
-        return "none";
+        return "NONE";
+    }
+
+
+    public String findFirstMoved( )
+    {
+
+        String row_array = "abcdefghij";
+        for (int row = 0; row < 10; row++)
+        {
+            for (int column = 0; column < 10; column++)
+            {
+                if ( (char)(field[row][column]) == ActionSymbols.MOVED.getSymbol())
+                {
+                    // Find needed symbol, need to convert to String and return
+                    char col_symb = row_array.charAt(column);
+                    String coords = "" + col_symb + (row + 1);
+
+                    return coords;
+                    
+                }
+
+            }
+        }
+
+        return "NONE";
+    }
+
+
+    public void print()
+    {
+       for (int row = 0; row < 10; row++)
+        {
+            for (int column = 0; column < 10; column++)
+            {
+                   System.out.print(field[row][column]) ;
+            }
+                System.out.println();
+        } 
     }
     
 }

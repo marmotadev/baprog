@@ -26,7 +26,7 @@ public class BasicShootingStrategy implements IShootingStrategy {
     };
 
     // Temporary map;
-    private FieldMap helper = new FieldMap();
+    public FieldMap helper = new FieldMap();
 
     private int current = 0;
 
@@ -47,16 +47,24 @@ public class BasicShootingStrategy implements IShootingStrategy {
         // At first checking my predefined shot
         while ( current < shots.length)
         {
-            if ( helper.getSymbolAt(shots[current]) == '+' )
+            if ( helper.getSymbolAt(shots[current]) == ActionSymbols.SEA.getSymbol() )
             {
                 myLastShot = shots[current++] ;
                 return myLastShot;
             }
+            else
+                current++;
         }
 
         // I have no more predefined shots, thus now firing at the empty spaces
         if ( helper.containsFree()) {
-            myLastShot = helper.findFirstFree(ActionSymbols.SEA);
+            myLastShot = helper.findFirstFree();
+            return myLastShot;
+        }
+
+        if ( helper.containsMoved()) {
+            myLastShot = helper.findFirstMoved();
+            return myLastShot; 
         }
 
         return "NONE";
