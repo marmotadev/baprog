@@ -8,15 +8,23 @@ public class Logic {
 	private HitStatus lastShotResult = HitStatus.FIRST;
 	private Coordinate ourLastShotTarget;
 	private boolean placed = false;
+	private int mapNo;
 
 	public void placeShips() {
-		System.out.println("placing ships");
-		char[][] mmm = FieldMap.safeCopymap(ShipPositions.map1);
+		mapNo = new Double(Math.random() * 4).intValue();
+		System.out.println("placing ships by map " + mapNo);
+		char[][] mmm = FieldMap.safeCopymap(ShipPositions.getMap(mapNo));
 		combatField.getOurMap().setField(mmm);
 		combatField.getEnemyMap().clearMap();
 		placed = true;
 		print();
+		System.out.println(ShipPositions.getMapCode(mapNo));
 
+	}
+
+	private char[][] pickRandomMap() {
+		
+		return ShipPositions.map1;
 	}
 
 	public Boolean getOurTurn() {
@@ -28,33 +36,50 @@ public class Logic {
 	}
 
 	public void theyShot(Coordinate c) {
+		if (getOurTurn() == null) {
+			setOurTurn(false);
+			System.out.println("Enemy is starting a game");
+		}
 		HitStatus theirShotResult;
 		System.out.println("They shot at " + c);
+		System.out.println("Symbol at coordinates : " + combatField.getOurMap().getSymbolAt(c));
 		if (combatField.getOurMap().getSymbolAt(c) == ActionSymbols.SEA.getSymbol())
 			theirShotResult = HitStatus.MISSED;
 		else 
 			theirShotResult = HitStatus.HIT;
 		
+		markTheirShot(theirShotResult, c);
 		
+		String msg = "";
 		switch (theirShotResult) {
 		case HIT:
 			setOurTurn(false);
+			msg = "They hit as!";
 			break;
 		case SINKED:
 			setOurTurn(false);
+			msg = "They sank our ship!";
 			break;
 		case MISSED:
 			setOurTurn(true);
+			msg = "Enemy missed!";
 			break;
 			default:
 				throw new IllegalStateException("Can't handle: Their status is " + theirShotResult);
 		}
-//		notImplemented();
+		if (getOurTurn())
+			shoot();
+	}
+
+	private void markTheirShot(HitStatus theirShotResult, Coordinate c) {
+		char newSymbol = symbolForHitStatus(theirShotResult);
+		combatField.getOurMap().changeSymbolTo(c.getX(), c.getY(), newSymbol);
 	}
 
 	public void theyMoved() {
-		System.out.println("They moved");
-		notImplemented();
+		System.out.println("They moved, we take over turn");
+		setOurTurn(true);
+		shoot();
 	}
 
 	public void last(HitStatus s) {

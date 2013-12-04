@@ -110,7 +110,9 @@ public class BasicShootingStrategy implements IShootingStrategy {
         // Converting myLastShot as pair number
 
         String column_array = "abcdefghij";
-       int column = myLastHit.charAt(0) - 'a';
+       int column = myLastShot.charAt(0) - 'a';
+       
+       map.changeSymbolTo(myLastShot, ActionSymbols.DEAD.getSymbol());
 
        int row;
         if (myLastHit.length() == 3)

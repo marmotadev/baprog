@@ -22,7 +22,7 @@ public class Coordinate {
 
 	public Coordinate(String x, String y) {
 		super();
-		this.x = x.charAt(0);
+		this.x = x.toLowerCase().charAt(0);
 		this.y = Integer.parseInt(y);
 	}
 
