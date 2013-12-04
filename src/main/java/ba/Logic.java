@@ -28,8 +28,28 @@ public class Logic {
 	}
 
 	public void theyShot(Coordinate c) {
+		HitStatus theirShotResult;
 		System.out.println("They shot at " + c);
-		notImplemented();
+		if (combatField.getOurMap().getSymbolAt(c) == ActionSymbols.SEA.getSymbol())
+			theirShotResult = HitStatus.MISSED;
+		else 
+			theirShotResult = HitStatus.HIT;
+		
+		
+		switch (theirShotResult) {
+		case HIT:
+			setOurTurn(false);
+			break;
+		case SINKED:
+			setOurTurn(false);
+			break;
+		case MISSED:
+			setOurTurn(true);
+			break;
+			default:
+				throw new IllegalStateException("Can't handle: Their status is " + theirShotResult);
+		}
+//		notImplemented();
 	}
 
 	public void theyMoved() {
@@ -40,13 +60,13 @@ public class Logic {
 	public void last(HitStatus s) {
 		switch (s) {
 		case MISSED:
-			ourTurn = false;
+			setOurTurn(false);
 			break;
 		case HIT:
-			ourTurn = true;
+			setOurTurn(true);
 			break;
 		case SINKED:
-			ourTurn = true;
+			setOurTurn(true);
 			break;
 		}
 		lastShotResult = s;
@@ -55,7 +75,7 @@ public class Logic {
 		combatField.getEnemyMap().changeSymbolTo(ourLastShotTarget.getX(),
 				ourLastShotTarget.getY(), newSymbol);
 
-		if (ourTurn)
+		if (getOurTurn())
 			shoot();
 
 	}
@@ -103,9 +123,9 @@ public class Logic {
 	public void shoot() {
 		System.out.println("Now we shoot");
 		if (getOurTurn() == null)
-			ourTurn = true;
+			setOurTurn(true);
 		else {
-			if (!ourTurn)
+			if (!getOurTurn())
 				throw new IllegalStateException(
 						"Cannot shoot - it is not our turn!");
 		}
@@ -132,6 +152,11 @@ public class Logic {
 	public void undo() {
 		System.out.println("undoing last move");
 		notImplemented();
+	}
+
+	public void setOurTurn(Boolean ourTurn) {
+		System.out.println("Changing our turn from " + this.ourTurn + " to " + ourTurn);
+		this.ourTurn = ourTurn;
 	}
 
 }

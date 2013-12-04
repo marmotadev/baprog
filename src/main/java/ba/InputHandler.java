@@ -100,6 +100,12 @@ public class InputHandler {
 		case "undo":
 			logic.undo();
 			break;
+		case "stat":
+			System.out.println("our turn?" + logic.getOurTurn());
+			break;
+		case "help":
+			System.out.println(" placeships, theymoved, theyshot <koordinate>, last <hit|empty|dead>, shoot, print, undo");
+			break;
 		default:
 			System.err.println("Did not understand command");
 		}
