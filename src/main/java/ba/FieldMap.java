@@ -1,5 +1,7 @@
 package ba;
 
+import java.util.Arrays;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -27,7 +29,13 @@ public class FieldMap {
         { ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol()},
     };
 
-
+    public static char[][] safeCopymap(char[][] m) {
+		char[][] nm = new char[10][];
+		for (int i=0; i < m.length; i++) {
+			nm[i] = Arrays.copyOf(m[i], m[i].length);
+		}
+		return nm;
+	}
     public void clearMap()
     {
         for (int i=0; i<10; i++)
@@ -42,7 +50,7 @@ public class FieldMap {
     Returns entire char array
     */
     public char[][] getField() {
-        return field;
+        return safeCopymap(field);
     }
 
     /*

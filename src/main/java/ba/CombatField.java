@@ -1,8 +1,10 @@
 package ba;
 
+import java.util.Arrays;
+
 public class CombatField {
-	private FieldMap ourMap;
-	private FieldMap enemyMap;
+	private FieldMap ourMap = new FieldMap();
+	private FieldMap enemyMap = new FieldMap();
 	
 	public FieldMap getOurMap() {
 		return ourMap;
@@ -16,6 +18,7 @@ public class CombatField {
 	public void setEnemyMap(FieldMap enemyMap) {
 		this.enemyMap = enemyMap;
 	}
+	
 	
 
 }

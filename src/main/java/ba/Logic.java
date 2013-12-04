@@ -1,5 +1,6 @@
 package ba;
 
+
 public class Logic {
 
 	IShootingStrategy shootingStrategy = new BasicShootingStrategy();
@@ -11,15 +12,11 @@ public class Logic {
 
 	public void placeShips() {
 		System.out.println("placing ships");
-		combatField.getOurMap().setField(pickRandomField());
+		combatField.getOurMap().setField(FieldMap.safeCopymap(ShipPositions.map1));
+		combatField.getEnemyMap().clearMap();
 		placed = true;
 		print();
 
-	}
-
-	private char[][] pickRandomField() {
-		// TODO Auto-generated method stub
-		return ShipPositions.map1;
 	}
 
 	public Boolean getOurTurn() {
@@ -40,7 +37,32 @@ public class Logic {
 		notImplemented();
 	}
 
-	public void lastMoveFromEnemy(ActionSymbols s) {
+	public void ourLastActionResult(ActionSymbols s) {
+		if (ourTurn)
+			throw new IllegalStateException(
+					"Enemy cannot move - it is our turn!");
+		System.out.println("Our last action resulted:" + s);
+		switch (s) {
+		case DEAD:
+			lastShotResult = HitStatus.SINKED;
+		case SEA:
+			lastShotResult = HitStatus.MISSED;
+		case WOUNDED:
+			lastShotResult = HitStatus.HIT;
+			break;
+		default:
+			throw new IllegalArgumentException("Incoorect last shot result" + s);
+		}
+		char newSymbol = symbolForHitStatus(lastShotResult);
+		combatField.getEnemyMap().changeSymbolTo(ourLastShotTarget.getX(),
+				ourLastShotTarget.getY(), newSymbol);
+
+	}
+
+	public void enemyShot(ActionSymbols s) {
+		if (ourTurn)
+			throw new IllegalStateException(
+					"Enemy cannot move - it is our turn!");
 		System.out.println("Our last action resulted:" + s);
 		switch (s) {
 		case DEAD:
@@ -68,8 +90,13 @@ public class Logic {
 		case SINKED:
 			return ActionSymbols.SHOT.getSymbol();
 		default:
-			throw new IllegalArgumentException("Incoorect last shot result" + lastShotResult2);
+			throw new IllegalArgumentException("Incoorect last shot result"
+					+ lastShotResult2);
 		}
+	}
+
+	public void ourActionResult() {
+
 	}
 
 	public void shoot() {
@@ -97,7 +124,8 @@ public class Logic {
 	}
 
 	public void print() {
-		notImplemented();
+		FieldMapWriter.print(combatField.getOurMap().getField(), combatField
+				.getEnemyMap().getField());
 	}
 
 	public void undo() {

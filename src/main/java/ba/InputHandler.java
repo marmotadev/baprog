@@ -88,7 +88,7 @@ public class InputHandler {
 		case "last":
 			expectParams(params, 1, "syntax: last  <hit|empty|dead>");
 			ActionSymbols s = parseSymbol(params.get(0));
-			logic.lastMoveFromEnemy(s);
+			logic.ourLastActionResult(s);
 			break;
 		case "shoot":
 			logic.shoot();
