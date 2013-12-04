@@ -5,17 +5,66 @@ public class ShipPositions {
 
 	private static char m = ActionSymbols.SEA.getSymbol();
 	private static char k = ActionSymbols.SHIP.getSymbol();
-	public static final String map1Code = "3c1z,4a2z,1h2,2c5z,1f5,3a7z,1i7z,2cz,1g9";
+	public static final String map1Code = "3c1z,4a2z,1h2,2c5z,1f5,3a7z,1i7z,2cz,1g9,2i4d";
 	public static final String map2Code = "3h1d,1a2,1d2,3j3z,1g5,1c6,,2j7z,4a10d,2f10d,2i10d";
 	public static final String map3Code = "1d1,1j2,1e4,1h6,3a8d,3e8d,2i8d,4a10d,2f10d,2i10d";
 	public static final String map4Code = "1f1,1e4,1h5,1a6,3a8d,3e8d,2i8d,4a10d,2f10d,2i10d";
 
+	public static String[][] ships1={
+		{"h2"},
+		{"i7"},
+		{"g9"},
+		{"f5"},
+		{"i4","j4"},
+		{"c5","c6"},
+		{"c8","c9"},
+		{"c1","c2","c3"},
+		{"a7","a8","a9"},
+		{"a2","a3","a4","a5"}
+	};
+
+	public static String[][] ships2={
+		{"a2"},
+		{"d2"},
+		{"c6"},
+		{"g5"},
+		{"f10","g10"},
+		{"j7","j8"},
+		{"i10","j10"},
+		{"j3","j4","j5"},
+		{"h1","i1","j1"},
+		{"a10","b10","c10","d10"}
+	};
+	public static String[][] ships3={
+		{""},
+		{""},
+		{""},
+		{""},
+		{"",""},
+		{"",""},
+		{"",""},
+		{"","",""},
+		{"","",""},
+		{"","","",""}
+	};
+	public static String[][] ships4={
+		{""},
+		{""},
+		{""},
+		{""},
+		{"",""},
+		{"",""},
+		{"",""},
+		{"","",""},
+		{"","",""},
+		{"","","",""}
+	};
 	public static char[][]map1={
 	//   a b c d e f g h i j
 		{m,m,k,m,m,m,m,m,m,m}, //1
 		{k,m,k,m,m,m,m,k,m,m}, //2
 		{k,m,k,m,m,m,m,m,m,m}, //3
-		{k,m,m,m,m,m,m,m,m,m}, //4
+		{k,m,m,m,m,m,m,m,k,k}, //4
 		{k,m,k,m,m,k,m,m,m,m}, //5
 		{m,m,k,m,m,m,m,m,m,m}, //6
 		{k,m,m,m,m,m,m,m,k,m}, //7
@@ -83,7 +132,7 @@ public class ShipPositions {
 
 
 	public static void main(String[] args) {
-		char[][] m = map4;
+		char[][] m = map3;
 		System.out.println("ABCDEFGHIJ");
 		for (int i = 0; i < m.length; i++) {
 			for (int ii = 0; ii < m[i].length; ii++) {
