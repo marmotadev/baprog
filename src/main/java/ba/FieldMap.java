@@ -59,9 +59,10 @@ public class FieldMap {
     public void setField(char[][] field) {
         //this.field = field;
         // Copying field
-        for (int i=0; i<10; i++)
-            for (int j=0; j<10; j++)
-                this.field[i][j] = field[i][j];
+    	this.field = safeCopymap(field);
+//        for (int i=0; i<10; i++)
+//            for (int j=0; j<10; j++)
+//                this.field[i][j] = field[i][j];
     }
     
     // Utility functions

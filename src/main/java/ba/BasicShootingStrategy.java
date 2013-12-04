@@ -183,7 +183,7 @@ public class BasicShootingStrategy implements IShootingStrategy {
             markShot(helper.getEnemyMap());
         }
 
-        if (huntingMode) {
+        if (false && huntingMode) {
             // Hunting for a ship
             myLastShot = hunt(helper.getEnemyMap());
 

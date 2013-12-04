@@ -68,6 +68,7 @@ public class InputHandler {
 		if (cmd == null) {
 			return;
 		}
+		
 		switch (cmd) {
 		case "exit":
 			System.exit(0);
@@ -87,8 +88,8 @@ public class InputHandler {
 			break;
 		case "last":
 			expectParams(params, 1, "syntax: last  <hit|empty|dead>");
-			ActionSymbols s = parseSymbol(params.get(0));
-			logic.ourLastActionResult(s);
+			HitStatus s = parseSymbol(params.get(0));
+			logic.last(s);
 			break;
 		case "shoot":
 			logic.shoot();
@@ -106,16 +107,16 @@ public class InputHandler {
 
 	}
 
-	private ActionSymbols parseSymbol(String string) {
+	private HitStatus parseSymbol(String string) {
 		switch (string) {
 		case "hit":
-			return ActionSymbols.WOUNDED;
+			return HitStatus.HIT;
 
 		case "empty":
-			return ActionSymbols.SEA;
+			return HitStatus.MISSED;
 
 		case "dead":
-			return ActionSymbols.SHOT;
+			return HitStatus.SINKED;
 		default:
 			throw new IllegalArgumentException(string);
 		}
