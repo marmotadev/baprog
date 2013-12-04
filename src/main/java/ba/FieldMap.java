@@ -27,7 +27,17 @@ public class FieldMap {
         { ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol()},
     };
 
+
     
+
+    public void clearMap()
+    {
+        for (int i=0; i<10; i++)
+        {
+            for (int j=0; j<10; j++)
+                field[i][j] = ActionSymbols.SEA.getSymbol(); 
+        } 
+    }
 
     // Getters and setters
     /*
