@@ -1,6 +1,5 @@
 package ba;
 
-
 public class Logic {
 
 	IShootingStrategy shootingStrategy = new BasicShootingStrategy();
@@ -40,7 +39,14 @@ public class Logic {
 
 	public void last(HitStatus s) {
 		switch (s) {
-		case FIRST:
+		case MISSED:
+			ourTurn = false;
+			break;
+		case HIT:
+			ourTurn = true;
+			break;
+		case SINKED:
+			ourTurn = true;
 			break;
 		}
 		lastShotResult = s;
@@ -48,33 +54,33 @@ public class Logic {
 		char newSymbol = symbolForHitStatus(lastShotResult);
 		combatField.getEnemyMap().changeSymbolTo(ourLastShotTarget.getX(),
 				ourLastShotTarget.getY(), newSymbol);
-		
+
 		if (ourTurn)
 			shoot();
 
 	}
 
-//	public void enemyShot(ActionSymbols s) {
-//		if (ourTurn)
-//			throw new IllegalStateException(
-//					"Enemy cannot move - it is our turn!");
-//		System.out.println("Our last action resulted:" + s);
-//		switch (s) {
-//		case DEAD:
-//			lastShotResult = HitStatus.SINKED;
-//		case SEA:
-//			lastShotResult = HitStatus.MISSED;
-//		case WOUNDED:
-//			lastShotResult = HitStatus.HIT;
-//			break;
-//		default:
-//			throw new IllegalArgumentException("Incoorect last shot result" + s);
-//		}
-//		char newSymbol = symbolForHitStatus(lastShotResult);
-//		combatField.getEnemyMap().changeSymbolTo(ourLastShotTarget.getX(),
-//				ourLastShotTarget.getY(), newSymbol);
-//
-//	}
+	// public void enemyShot(ActionSymbols s) {
+	// if (ourTurn)
+	// throw new IllegalStateException(
+	// "Enemy cannot move - it is our turn!");
+	// System.out.println("Our last action resulted:" + s);
+	// switch (s) {
+	// case DEAD:
+	// lastShotResult = HitStatus.SINKED;
+	// case SEA:
+	// lastShotResult = HitStatus.MISSED;
+	// case WOUNDED:
+	// lastShotResult = HitStatus.HIT;
+	// break;
+	// default:
+	// throw new IllegalArgumentException("Incoorect last shot result" + s);
+	// }
+	// char newSymbol = symbolForHitStatus(lastShotResult);
+	// combatField.getEnemyMap().changeSymbolTo(ourLastShotTarget.getX(),
+	// ourLastShotTarget.getY(), newSymbol);
+	//
+	// }
 
 	private char symbolForHitStatus(HitStatus lastShotResult2) {
 		switch (lastShotResult2) {
