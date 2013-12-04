@@ -28,8 +28,6 @@ public class FieldMap {
     };
 
 
-    
-
     public void clearMap()
     {
         for (int i=0; i<10; i++)
@@ -51,7 +49,11 @@ public class FieldMap {
     Set a new grid
     */
     public void setField(char[][] field) {
-        this.field = field;
+        //this.field = field;
+        // Copying field
+        for (int i=0; i<10; i++)
+            for (int j=0; j<10; j++)
+                this.field[i][j] = field[i][j];
     }
     
     // Utility functions
