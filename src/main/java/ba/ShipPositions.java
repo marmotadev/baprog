@@ -35,18 +35,20 @@ public class ShipPositions {
 		{"h1","i1","j1"},
 		{"a10","b10","c10","d10"}
 	};
+
 	public static String[][] ships3={
-		{""},
-		{""},
-		{""},
-		{""},
-		{"",""},
-		{"",""},
-		{"",""},
-		{"","",""},
+		{"d1"},
+		{"j1"},
+		{"e4"},
+		{"h6"},
+		{"i8","j8"},
+		{"f10","g10"},
+		{"i10","j10"},
+		{"a8","",""},
 		{"","",""},
 		{"","","",""}
 	};
+
 	public static String[][] ships4={
 		{""},
 		{""},
@@ -130,7 +132,47 @@ public class ShipPositions {
 //	};
 //
 
+	public static String getMapCode(int i){
+		switch(i){
+		case 1:
+			return map1Code;
+		case 2:
+			return map2Code;
+		case 3:
+			return map3Code;
+		case 4:
+			return map4Code;
+		default: return null;
+		}
+	}
 
+	public static char[][] getMap(int i){
+		switch(i){
+		case 1:
+			return map1;
+		case 2:
+			return map2;
+		case 3:
+			return map3;
+		case 4:
+			return map4;
+		default: return null;
+		}
+	}
+
+	public static String[][] getShip(int i){
+		switch(i){
+		case 1:
+			return ships1;
+		case 2:
+			return ships2;
+		case 3:
+			return ships3;
+		case 4:
+			return ships4;
+		default: return null;
+		}
+	}
 	public static void main(String[] args) {
 		char[][] m = map3;
 		System.out.println("ABCDEFGHIJ");
