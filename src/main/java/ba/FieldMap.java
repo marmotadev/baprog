@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class FieldMap {
 
     // By default is empty field
-    private char field[][] = 
+    private char field[][] =
    {
         { ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol()},
         { ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol(), ActionSymbols.SEA.getSymbol()},
@@ -41,8 +41,8 @@ public class FieldMap {
         for (int i=0; i<10; i++)
         {
             for (int j=0; j<10; j++)
-                field[i][j] = ActionSymbols.SEA.getSymbol(); 
-        } 
+                field[i][j] = ActionSymbols.SEA.getSymbol();
+        }
     }
 
     // Getters and setters
@@ -51,6 +51,10 @@ public class FieldMap {
     */
     public char[][] getField() {
         return safeCopymap(field);
+    }
+
+    public String[][] getFieldString() {
+        return ShipPositions.getShips(1);
     }
 
     /*
@@ -64,7 +68,7 @@ public class FieldMap {
 //            for (int j=0; j<10; j++)
 //                this.field[i][j] = field[i][j];
     }
-    
+
     // Utility functions
     public boolean isMapValid()
     {
@@ -88,7 +92,7 @@ public class FieldMap {
             for (int j=0; j<10; j++)
                 if ( field[i][j] == ActionSymbols.SEA.getSymbol() )
                     return true;
-        } 
+        }
 
        return false;
     }
@@ -101,7 +105,7 @@ public class FieldMap {
             for (int j=0; j<10; j++)
                 if ( field[i][j] == ActionSymbols.MOVED.getSymbol() )
                     return true;
-        } 
+        }
 
        return false;
     }
@@ -112,7 +116,7 @@ public class FieldMap {
     @param row - row which is integer
     @return  true if passed coordinates are within the grid
     */
-    public boolean isValid (char column, int row) 
+    public boolean isValid (char column, int row)
     {
         // At first convert to string to use regular expressions for easy validation
         String pos = "" + column + row;
@@ -131,7 +135,7 @@ public class FieldMap {
         if (coords == null || coords.isEmpty()) return false;
         String regexp = "^[a-j]([1-9]|10)$";
 
-        return  coords.matches(regexp); 
+        return  coords.matches(regexp);
     }
 
     /**
@@ -153,7 +157,7 @@ public class FieldMap {
 
         return field[row_number][column_number];
     }
-    
+
     public char getSymbolAt(Coordinate c)
     {
     	return getSymbolAt(c.getX(), c.getY());
@@ -175,7 +179,7 @@ public class FieldMap {
         int row;
         if (coords.length() == 3)
             row = 9; // 10 was given so last row
-        else 
+        else
             row = coords.charAt(1) - '1';
 
         return field[row][column];
@@ -197,7 +201,7 @@ public class FieldMap {
         int column_numb = column - 'a';
 
         // Calcuate row based on number
-        int row_number = row - 1; 
+        int row_number = row - 1;
 
         field[row_number] [column_numb] = newSymbol;
 
@@ -215,7 +219,7 @@ public class FieldMap {
         int row;
         if (coords.length() == 3)
             row = 9; // 10 was given so last row
-        else 
+        else
             row = coords.charAt(1) - '1';
 
         field[row] [column] = newSymbol;
@@ -225,7 +229,7 @@ public class FieldMap {
     /**
     Finds the first occurance of free symbol passed as param
     @param symbol which symbol to check
-    @return 
+    @return
     */
     public String findFirstFree( )
     {
@@ -242,7 +246,7 @@ public class FieldMap {
                     String coords = "" + col_symb + (row + 1);
 
                     return coords;
-                    
+
                 }
 
             }
@@ -267,7 +271,7 @@ public class FieldMap {
                     String coords = "" + col_symb + (row + 1);
 
                     return coords;
-                    
+
                 }
 
             }
@@ -286,7 +290,7 @@ public class FieldMap {
                    System.out.print(field[row][column]) ;
             }
                 System.out.println();
-        } 
+        }
     }
-    
+
 }
