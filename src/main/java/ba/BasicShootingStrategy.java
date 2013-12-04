@@ -105,6 +105,44 @@ public class BasicShootingStrategy implements IShootingStrategy {
         return "none";
         */
     }
+
+    void markShot( FieldMap map) {
+        // Converting myLastShot as pair number
+
+        String column_array = "abcdefghij";
+       int column = myLastHit.charAt(0) - 'a';
+
+       int row;
+        if (myLastHit.length() == 3)
+            row = 9; // 10 was given so last row
+        else 
+            row = myLastHit.charAt(1) - '1';
+
+        if ( map.getSymbolAt(column_array.charAt(column - 1 ), row) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(column_array.charAt(column - 1 ), row, ActionSymbols.SHOT.getSymbol());
+
+        if ( map.getSymbolAt(column_array.charAt(column + 1 ), row) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(column_array.charAt(column + 1 ), row, ActionSymbols.SHOT.getSymbol());
+
+        if ( map.getSymbolAt(column_array.charAt(column - 1 ), row - 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(column_array.charAt(column - 1 ), row - 1, ActionSymbols.SHOT.getSymbol());
+
+        if ( map.getSymbolAt(column_array.charAt(column - 1 ), row + 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(column_array.charAt(column - 1 ), row + 1, ActionSymbols.SHOT.getSymbol());
+
+        if ( map.getSymbolAt(column_array.charAt(column - 1 ), row - 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(column_array.charAt(column - 1 ), row - 1, ActionSymbols.SHOT.getSymbol());
+
+        if ( map.getSymbolAt(column_array.charAt(column - 1 ), row + 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(column_array.charAt(column - 1 ), row + 1, ActionSymbols.SHOT.getSymbol());
+
+        if ( map.getSymbolAt(column_array.charAt(column + 1 ), row - 1) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(column_array.charAt(column + 1 ), row - 1, ActionSymbols.SHOT.getSymbol());
+
+        if ( map.getSymbolAt(column_array.charAt(column + 1 ), row + 1 ) == ActionSymbols.SEA.getSymbol() )
+           map.changeSymbolTo(column_array.charAt(column + 1 ), row + 1, ActionSymbols.SHOT.getSymbol());
+
+    }
     
     @Override
     public String shoot( CombatField helper, HitStatus lastHit )
@@ -121,16 +159,35 @@ public class BasicShootingStrategy implements IShootingStrategy {
             // Entering hunting mode
             huntingMode = true;
 
+            helper.getEnemyMap().changeSymbolTo(myLastShot, ActionSymbols.WOUNDED.getSymbol());
+
             // Remembering where I hit last
             myLastHit = myLastShot;
+        }
+
+        if (lastHit == HitStatus.SINKED)
+        {
+            huntingMode = false;
+            // Need to mark possible neighbours as shot if they are empty
+
+            // Markingthis place as hitted
+            helper.getEnemyMap().changeSymbolTo(myLastShot, ActionSymbols.WOUNDED.getSymbol());
+
+            markShot(helper.getEnemyMap());
         }
 
         if (huntingMode) {
             // Hunting for a ship
             myLastShot = hunt(helper.getEnemyMap());
 
-            if (myLastShot != null ) return myLastShot;
+            // I was unable to find next target, I give up on this strategy for now
+            if (myLastShot != null ) 
+            {
+                huntingMode = false;
+                return myLastShot;
+            }
         }
+
 
         // At first checking my predefined shot
         while ( current < shots.length)
