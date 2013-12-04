@@ -119,18 +119,18 @@ public class FieldMap {
     @param row row of the grid
     @return Character from grid, '|' otherwise
     */
-    public char getSymbolAt( char row, int column )
+    public char getSymbolAt( char column, int row )
     {
         // First symbol is column and encoded by char
-        if (!isValid(row, column)) return '|';
+        if (!isValid(column, row)) return '|';
 
         // Calculate column based on letter
-        int row_number = row - 'a';
+        int column_number = column - 'a';
 
         // Calcuate row based on number
-        int column_numb = column - 1;
+        int row_number = row - 1;
 
-        return field[row_number][column_numb];
+        return field[row_number][column_number];
     }
     
     public char getSymbolAt(Coordinate c)
