@@ -87,7 +87,7 @@ public class FieldMapWriter {
 
 	public static	void
 					main(String[] args) {
-		FirldMap map = new FirldMap();
+		FieldMap map = new FieldMap();
 		FieldMapWriter.print(map.getField(), map.getField());
 	}
 
