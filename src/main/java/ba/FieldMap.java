@@ -119,7 +119,11 @@ public class FieldMap {
 
         return field[row_number][column_numb];
     }
-
+    
+    public char getSymbolAt(Coordinate c)
+    {
+    	return getSymbolAt(c.getX(), c.getY());
+    }
 
     /**
     Gets a symbol from grid via String coords
