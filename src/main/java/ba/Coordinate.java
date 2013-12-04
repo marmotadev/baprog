@@ -1,5 +1,7 @@
 package ba;
 
+import java.util.HashMap;
+
 public class Coordinate {
 	private String x;
 	private String y;
@@ -25,7 +27,15 @@ public class Coordinate {
 	public String toString() {
 		return "Coordinate [x=" + x + ", y=" + y + "]";
 	}
-	
+	public int getMapX() {
+//		Map<String> m = new HashMap<>();
+//		m.
+		return 0;
+		
+	}
+	public int getMapY() {
+		return Integer.parseInt(y);
+	}
 	
 
 }

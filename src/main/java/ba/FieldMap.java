@@ -10,7 +10,7 @@ package ba;
  *
  * @author tlapinskas
  */
-public class Map {
+public class FieldMap {
 
     // By default is empty field
     private char field[][] = 

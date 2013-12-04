@@ -26,7 +26,7 @@ public class BasicShootingStrategy implements IShootingStrategy {
     };
 
     // Temporary map;
-    private Map helper = new Map();
+    private FieldMap helper = new FieldMap();
 
     private int current = 0;
 

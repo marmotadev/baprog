@@ -2,6 +2,8 @@ package ba;
 
 public class Logic {
 
+	IShootingStrategy shootingStrategy = new BasicShootingStrategy();
+	private HitStatus lastShotResult;
 	public void placeShips() {
 		System.out.println("placing ships");
 		notImplemented();
@@ -38,6 +40,9 @@ public class Logic {
 
 	public void shoot() {
 		System.out.println("Now we shoot");
+		String target = shootingStrategy.shoot(lastShotResult);
+		//TODO:
+		// init lastShotResult
 		notImplemented();
 	}
 

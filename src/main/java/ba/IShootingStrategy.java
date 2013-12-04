@@ -12,6 +12,8 @@ package ba;
  */
 public interface IShootingStrategy {
 
-    public String shoot( HitStatus lastHit);
+    String NONE = "NONE";
+
+	public String shoot( HitStatus lastHit);
     
 }
